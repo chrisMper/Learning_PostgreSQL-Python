@@ -8,4 +8,4 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 2. give a password when asked (note it somewhere safe)
 3. install pgAdmin 4 (optional, for GUI-based interaction with database)
 
-screenshot : pgadmin_install.png
+![pgAdmin Installation](pgAdmin_Install.png)
