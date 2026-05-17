@@ -12,14 +12,14 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
 ## Create a PostgreSQL database and Connect to python.
 
-1. Create a new database in pgAdmin
+### 1. Create a new database in pgAdmin
     - Servers> Databases(right click on Databases)> Create> Database (here the database name is store_performance_db)>save
     - store_performance_db > schemas > public > Tables (right click on Tables)
-2. Create a table using SQL
+### 2. Create a table using SQL
     - select the database > click on tools on nav bar > select Query tool.
     - Now type and run the SQL query
     ![Create table](createTable.png)
-3. Connect to PostgreSQL using Python
+### 3. Connect to PostgreSQL using Python
     - **Option A: Jupyter Notebook**
         - A Jupyter Notebook `database_analysis.ipynb` has been created.
         - Required libraries: `pip install psycopg2-binary pandas jupyter sqlalchemy`
@@ -29,11 +29,19 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
         - Required libraries: `pip install psycopg2-binary pandas sqlalchemy`
         - Run it using: `python database_analysis.py`
         - It handles the connection and prints the PostgreSQL version to confirm success.
-        - coding steps
-            - import pandas as pd
-            - import text from sqlalchemy
-            - create engine 
-            - Database connection credentials
+        - Code segment:
+          ```python
+          import pandas as pd
+          from sqlalchemy import create_engine, text
+
+          USERNAME = "postgres"
+          PASSWORD = "YOUR_PASSWORD"
+          HOST = "localhost"
+          PORT = "5432"
+          DB_NAME = "store_performance_db"
+
+          engine = create_engine(f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
+          ```
 
 ## SQL Queries
 
@@ -51,6 +59,40 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 | `INSERT INTO table_name (column1, column2) VALUES (value1, value2);` | Insert a new row into a table. |
 | `UPDATE table_name SET column1 = value1 WHERE condition;` | Update existing rows in a table. |
 | `DELETE FROM table_name WHERE condition;` | Delete rows from a table. |
+
+
+## Upload CSV to PostgreSQL using Python
+
+Loaded a CSV file into Pandas, formatted the date column, and uploaded the data to PostgreSQL.
+
+### 1. Read CSV and Format Date
+```python
+# Read the CSV file
+store_df = pd.read_csv("store_performance_dataset.csv")
+
+# Format the Date column
+try:
+    store_df['Date'] = pd.to_datetime(store_df['Date'])
+    store_df['Date'] = store_df['Date'].dt.strftime('%Y-%m-%d')
+except Exception as e:
+    print("Error formatting date column:", e)
+```
+
+### 2. Upload to Database
+```python
+# Uploading the data into the database
+store_df.to_sql("store_sales", engine, if_exists="replace", index=False)
+print("Data uploaded to PostgreSQL successfully!")
+```
+
+### 3. Verify the Upload
+```python
+# Check the connection and row count
+with engine.connect() as conn:
+    count = conn.execute(text("SELECT COUNT(*) FROM store_sales;"))
+    print("Number of rows in the table:", count.fetchone()[0])
+```
+
 
 
 ## Setup & Configuration
