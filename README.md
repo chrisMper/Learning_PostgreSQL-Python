@@ -115,6 +115,17 @@ You can run the analysis by executing:
 python analyze.py
 ```
 
+## Data Visualization
+
+The `visualize.py` script queries the database to create visual representations of the data:
+
+- **Sales by Store**: Generates a bar chart showing the total sales for each store and saves it as `sales_by_store.png`.
+
+You can run the visualization by executing:
+```bash
+python visualize.py
+```
+
 ## Setup & Configuration
 
 - A `.gitignore` file has been added to exclude common Python and environment files (like virtual environments and `__pycache__`) from version control.
