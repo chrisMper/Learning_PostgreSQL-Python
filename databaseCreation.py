@@ -1,15 +1,7 @@
 import pandas as pd
-from sqlalchemy import create_engine, text
-
-# Database connection credentials
-USERNAME = "postgres"
-PASSWORD = "admin"  # Replace with your actual password if different
-HOST = "localhost"
-PORT = "5432"
-DB_NAME = "store_performance_db"
-
-# Create the connection engine (Don't forget the password in the connection string!)
-engine = create_engine(f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
+from sqlalchemy import text
+from connection import engine
+from checkConnection import check_entire_table
 
 def test_connection():
     try:
@@ -52,6 +44,6 @@ store_df.to_sql("store_sales", engine, if_exists="replace", index=False)
 print("\nData uploaded to PostgreSQL successfully!")
 
 #Check the connection
-with engine.connect() as conn:
-    count = conn.execute(text("SELECT COUNT(*) FROM store_sales;"))
-    print("Number of rows in the table:", count.fetchone()[0])
+check_entire_table()
+
+# Note: Project files have been restructured. Connection logic is now in connection.py

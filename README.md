@@ -93,7 +93,27 @@ with engine.connect() as conn:
     print("Number of rows in the table:", count.fetchone()[0])
 ```
 
+## Restructuring the project files
 
+To improve modularity and code organization, the project logic has been restructured into multiple dedicated Python scripts:
+
+- **`connection.py`**: Centralizes the database connection credentials and configuration, creating the SQLAlchemy `engine` used by other scripts.
+- **`checkConnection.py`**: Contains utility functions like `check_entire_table()` to quickly verify database connectivity and output row counts.
+- **`databaseCreation.py`**: Handles reading the raw CSV, formatting the date column appropriately, and uploading the `store_performance_dataset.csv` data to the PostgreSQL database.
+- **`analyze.py`**: A dedicated script that performs data analysis on the data queried directly from the PostgreSQL database.
+
+## Data Analysis
+
+The `analyze.py` script utilizes Pandas and SQLAlchemy to execute analysis directly against the PostgreSQL `store_sales` table. Current analysis includes:
+
+- **Top Performing Stores**: Groups by `StoreName` to find the store generating the highest overall net sales.
+- **Sales by Region**: Aggregates `NetSales` across different regions to identify the highest revenue-generating areas.
+- **Revenue by Day of the Week**: Computes the total revenue on each day to pinpoint the busiest and most profitable shopping days.
+
+You can run the analysis by executing:
+```bash
+python analyze.py
+```
 
 ## Setup & Configuration
 
