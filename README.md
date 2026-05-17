@@ -129,3 +129,12 @@ python visualize.py
 ## Setup & Configuration
 
 - A `.gitignore` file has been added to exclude common Python and environment files (like virtual environments and `__pycache__`) from version control.
+
+## Learning Outcomes
+
+Through this project, I have achieved the following:
+- **Database Connectivity**: Learned how to connect Python to a PostgreSQL database using SQLAlchemy and `psycopg2`.
+- **Data Pipeline**: Successfully read, cleaned, and formatted a CSV dataset using Pandas before uploading it to a database.
+- **Data Analysis**: Queried a SQL database directly to extract meaningful business insights like top performing stores and sales by region.
+- **Data Visualization**: Generated professional charts using Seaborn and Matplotlib to visualize database query results.
+- **Project Modularity**: Practiced restructuring a project from a single file into multiple clean, reusable scripts.
